@@ -1,6 +1,6 @@
 import css from './User.module.css';
 
-export default function User({ data: { id, name, number } }) {
+export default function User({ data: { id, name, number }, onDelete }) {
   return (
     <div className={css.contContact}>
       <div>

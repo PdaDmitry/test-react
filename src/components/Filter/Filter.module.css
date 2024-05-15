@@ -1,0 +1,6 @@
+.contFilter {
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+    margin-bottom: 20px;
+}

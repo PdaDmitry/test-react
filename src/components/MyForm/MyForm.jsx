@@ -1,26 +1,26 @@
 import { useId, useState } from 'react';
 import css from './MyForm.module.css';
+import { nanoid } from 'nanoid';
 
-export default function MyForm({ lalala, contact, setContact }) {
+export default function MyForm({ onAdd }) {
   const userId = useId();
   const numberId = useId();
 
-  // const [contact, setContact] = useState('');
+  const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    lalala({ contact, number });
-    setContact('');
+    onAdd({ id: nanoid(), name, number });
+    setName('');
     setNumber('');
-    // e.target.reset();
   };
 
   return (
     <form className={css.contForm} onSubmit={handleSubmit}>
       <div className={css.contInput}>
         <label htmlFor={userId}>Username</label>
-        <input type="text" id={userId} value={contact} onChange={e => setContact(e.target.value)} />
+        <input type="text" id={userId} value={name} onChange={e => setName(e.target.value)} />
       </div>
 
       <div className={css.contInput}>
