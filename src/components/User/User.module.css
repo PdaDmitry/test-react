@@ -1,0 +1,11 @@
+.contContact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 220px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 4px;
+
+    /* gap: 12px; */
+}
