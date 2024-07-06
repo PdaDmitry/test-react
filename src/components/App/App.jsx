@@ -1,41 +1,25 @@
-import MyForm from '../MyForm/MyForm';
-import objContacts from '../../objContacts.json';
-import { useState } from 'react';
-import Filter from '../Filter/Filter';
-import Users from '../Users/Users';
+import { useDispatch, useSelector } from 'react-redux';
+import { deposit, withdraw } from '../../redux/store';
+import LangSwitcher from '../LangSwitcher/LangSwitcher';
 
 export default function App() {
-  const [users, setUsers] = useState(objContacts);
-  const [filter, setFilter] = useState('');
+  //функция отправки action
+  const dispatch = useDispatch();
 
-  const addContact = newContact => {
-    setUsers(prevUsers => {
-      console.log(newContact);
-      return [...prevUsers, newContact];
-    });
-  };
+  //state.balance.value это одна часть состояния
+  const balance = useSelector(state => state.balance.value);
+  //console.log(balance);
 
-  const usersVisible = users.filter(
-    user =>
-      user.name.toLowerCase().includes(filter.toLowerCase()) ||
-      user.number.toLowerCase().includes(filter)
-  );
-
-  // useEffect(() => {
-  //   console.log('Updated users:', users);
-  // }, [users]);
-
-  const deleteContact = id => {
-    setUsers(prevUsers => {
-      return prevUsers.filter(user => user.id !== id);
-    });
-  };
+  const lang = useSelector(state => state.local.lang);
 
   return (
-    <>
-      <MyForm onAdd={addContact} />
-      <Filter value={filter} onFilter={setFilter} />
-      <Users users={usersVisible} propDelete={deleteContact} />
-    </>
+    <div>
+      <LangSwitcher />
+      <p>Current lang: {lang}</p>
+      <hr />
+      <p>Balance: {balance} credits</p>
+      <button onClick={() => dispatch(deposit(10))}>Deposit 10 credits</button>
+      <button onClick={() => dispatch(withdraw(5))}>Withdraw 5 credits</button>
+    </div>
   );
 }
