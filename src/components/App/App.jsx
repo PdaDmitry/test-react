@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deposit, withdraw } from '../../redux/store';
 import LangSwitcher from '../LangSwitcher/LangSwitcher';
+import { deposit, withdraw } from '../../redux/balanceSlice';
 
 export default function App() {
   //функция отправки action
