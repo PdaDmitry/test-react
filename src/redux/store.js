@@ -1,7 +1,21 @@
-import { combineReducers, createStore } from 'redux';
-import { devToolsEnhancer } from '@redux-devtools/extension';
+import { configureStore } from '@reduxjs/toolkit';
 import { balanceReducer } from './balanceSlice';
 import { localReducer } from './localSlice';
+
+export const store = configureStore({
+  reducer: {
+    balance: balanceReducer,
+    local: localReducer,
+  },
+});
+
+// const rootReducer = combineReducers({
+//   balance: balanceReducer,
+//   local: localReducer,
+// });
+
+// export const store = createStore(rootReducer, devToolsEnhancer());
+// =========================================================================
 
 //выносим в отдельный файл localSlice.js все, что касается local
 // export const changeLang = item => {
@@ -70,13 +84,13 @@ import { localReducer } from './localSlice';
 //       return state;
 //   }
 // };
+// =========================================================================
+// const rootReducer = combineReducers({
+//   balance: balanceReducer,
+//   local: localReducer,
+// });
 
-const rootReducer = combineReducers({
-  balance: balanceReducer,
-  local: localReducer,
-});
-
-export const store = createStore(rootReducer, devToolsEnhancer());
+// export const store = createStore(rootReducer, devToolsEnhancer());
 // =========================================================================
 //начальное состояние
 // const initialState = {
