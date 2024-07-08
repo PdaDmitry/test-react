@@ -2,12 +2,37 @@ import { configureStore } from '@reduxjs/toolkit';
 import { balanceReducer } from './balanceSlice';
 import { localReducer } from './localSlice';
 
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
+
+// ==================================================================
+//лучше делать эту часть в файле слайса
+// const persistConfig = {
+// key: 'balance', // ключь для localStorage
+// storage,
+// whitelist: ['value'], // в массиве указываем те св-ва, которые нужно сохранить в LocalStorage
+// blacklist: ['a'], для тех св-в, которые не нужно сохранять
+// };
+
+// const persistedBalanceReducer = persistReducer(persistConfig, balanceReducer); // сохраняем в LocalStorage value: 0, из balanceSlice.js(только для balance)
+
+// let store = createStore(persistedReducer);
+// let persistor = persistStore(store);
+// ====================================================================
 export const store = configureStore({
   reducer: {
     balance: balanceReducer,
     local: localReducer,
   },
+  // эта секция, чтобы в localStorage можно было записывать функции
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
+export const persistore = persistStore(store);
 
 // const rootReducer = combineReducers({
 //   balance: balanceReducer,

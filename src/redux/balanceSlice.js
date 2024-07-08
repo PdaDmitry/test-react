@@ -1,10 +1,13 @@
 // import { createAction, createReducer } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const balanceSlice = createSlice({
   name: 'balance',
   initialState: {
     value: 0,
+    a: 1, //для примера, добавим еще одно св-во
   },
   reducers: {
     //action
@@ -19,7 +22,17 @@ const balanceSlice = createSlice({
 });
 
 export const { deposit, withdraw } = balanceSlice.actions;
-export const balanceReducer = balanceSlice.reducer;
+
+const persistConfig = {
+  key: 'balance', // ключь для localStorage
+  storage,
+  whitelist: ['value'], // в массиве указываем те св-ва, которые нужно сохранить в LocalStorage
+  // blacklist: ['a'], для тех св-в, которые не нужно сохранять
+};
+
+export const balanceReducer = persistReducer(persistConfig, balanceSlice.reducer);
+
+// export const balanceReducer = balanceSlice.reducer;
 
 // const balanceInitialState = {
 //   value: 0,
